@@ -2555,6 +2555,9 @@ function _start_router() {
 
 		event.preventDefault();
 
+		// If the path hasn't changed, stop navigation to avoid loading wrong data later
+		if (same_pathname) return;
+
 		// allow the browser to repaint before navigating —
 		// this prevents INP scores being penalised
 		await new Promise((fulfil) => {

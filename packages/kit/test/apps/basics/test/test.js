@@ -2039,6 +2039,24 @@ test.describe('params prop', () => {
 	});
 });
 
+test.describe('same-page navigation data loading', () => {
+	test('hover preloads data and clicking same link does not reload or break state', async ({
+		page,
+		clicknav
+	}) => {
+		await page.goto('/params-prop/456');
+
+		await expect(page.locator('p')).toHaveText('x: 456');
+
+		await page.hover('[href="/params-prop/123"]');
+		await page.waitForTimeout(100);
+
+		await clicknav('[href="/params-prop/456"]');
+
+		await expect(page.locator('p')).toHaveText('x: 456');
+	});
+});
+
 test.describe('service worker option', () => {
 	test('pass the options to the service worker', async ({ page }) => {
 		await page.goto('/');
