@@ -844,6 +844,14 @@ test.describe('client error boundaries', () => {
 	});
 });
 
+test.describe('attach in async boundary', () => {
+	test('attach action runs after async boundary resolves', async ({ page }) => {
+		await page.goto('/attach-boundary');
+		await new Promise((resolve) => setTimeout(resolve, 60));
+		await expect(page.locator('#attach-state')).toHaveText('attached');
+	});
+});
+
 test.describe('fork', () => {
 	test('preloading one route must not throw errors when navigating elsewhere', async ({ page }) => {
 		await page.goto('/fork');
